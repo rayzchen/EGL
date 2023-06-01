@@ -8,7 +8,6 @@ endif()
 if(WIN32)
   set(EGL_PLATFORM_SOURCES
       ${CMAKE_CURRENT_LIST_DIR}/src/egl_windows.cpp)
-  add_compile_options("/std:c++17")
 else()
   if(UNIX AND NOT APPLE)
     if (ANDROID OR EGL_UNIX_USE_WAYLAND)
@@ -31,7 +30,7 @@ set(EGL_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/include/EGL/eglplatform.h
     ${CMAKE_CURRENT_LIST_DIR}/include/KHR/khrplatform.h)
 
-add_library(egl STATIC
+add_library(egl SHARED
     ${EGL_SOURCES})
 
 target_include_directories(egl PUBLIC
