@@ -25,14 +25,21 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         cd EGL
-        cmake -B ${{github.workspace}}/build -DEGL_NO_GLEW=ON -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        cmake -B ${{github.workspace}}/build -DEGL_NO_GLEW=ON -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_SHARED_LIBS=ON
 
     - name: Build
       # Build your program with the given configuration
+      env:
+        CXXFLAGS: "/std:c++17"
       run: |
         cd EGL
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
         ls ${{github.workspace}}/build/${{env.BUILD_TYPE}}/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        path: ${{github.workspace}}/build/${{env.BUILD_TYPE}}/*
 
     - name: Test
       working-directory: ${{github.workspace}}/build
