@@ -29,11 +29,9 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      env:
-        CXXFLAGS: "/std:c++17"
       run: |
         cd EGL
-        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+        cmake -E env CXXFLAGS="/std:c++17" --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
         ls ${{github.workspace}}/build/${{env.BUILD_TYPE}}/
 
     - name: Upload artifact
