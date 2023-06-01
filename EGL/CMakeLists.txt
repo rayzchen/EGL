@@ -8,6 +8,7 @@ endif()
 if(WIN32)
   set(EGL_PLATFORM_SOURCES
       ${CMAKE_CURRENT_LIST_DIR}/src/egl_windows.cpp)
+  add_compile_options("/std:c++17")
 else()
   if(UNIX AND NOT APPLE)
     if (ANDROID OR EGL_UNIX_USE_WAYLAND)
@@ -36,7 +37,6 @@ add_library(egl SHARED
 target_include_directories(egl PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/include)
 target_compile_definitions(egl PUBLIC KHRONOS_STATIC) # PUBLIC - make it go down to every target linking egl
-target_compile_definitions(egl PUBLIC cxx_std_17) # PUBLIC - make it go down to every target linking egl
 add_definitions(-DEGLAPI=)
 option(EGL_NO_GLEW "Do not use GLEW" OFF)
 if(EGL_NO_GLEW)
